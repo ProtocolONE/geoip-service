@@ -1,7 +1,7 @@
 geoip-service
 =============
 
-[![Build Status](https://travis-ci.org/ProtocolONE/geoip-service.svg?branch=master)](https://travis-ci.org/ProtocolONE/geoip-service)
+[![Build Status](https://travis-ci.org/ProtocolONE/geoip-service.svg?branch=master)](https://travis-ci.org/ProtocolONE/geoip-service) [![codecov](https://codecov.io/gh/ProtocolONE/geoip-service/branch/master/graph/badge.svg)](https://codecov.io/gh/ProtocolONE/geoip-service)
 
 
 A fast [Go-Micro](https://github.com/micro/go-micro) GRPC based microservice for looking up MaxMind GeoIP2 and GeoLite2 database.
