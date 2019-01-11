@@ -32,7 +32,7 @@ By default service will be executed with declared by `MICRO_REGISTRY` registry a
 The docker file in this project used to launch geoip-service in Protocol One environment. You may change it in any 
 way you need it.
 
-#Using the service
+# Using the service
 
 Once the service is running you can use go-micro to make requests
 
