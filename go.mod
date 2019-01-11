@@ -15,9 +15,9 @@ require (
 	github.com/hashicorp/memberlist v0.1.0 // indirect
 	github.com/hashicorp/serf v0.8.1 // indirect
 	github.com/json-iterator/go v1.1.5 // indirect
-	github.com/kelseyhightower/envconfig v1.3.0 // indirect
+	github.com/kelseyhightower/envconfig v1.3.0
 	github.com/micro/cli v0.0.0-20181223203424-1b0c9793c300 // indirect
-	github.com/micro/go-grpc v0.6.0 // indirect
+	github.com/micro/go-grpc v0.6.0
 	github.com/micro/go-log v0.0.0-20170512141327-cbfa9447f9b6 // indirect
 	github.com/micro/go-micro v0.15.0
 	github.com/micro/go-plugins v0.17.0 // indirect
