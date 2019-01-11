@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package proto;
+
+service GeoIpService {
+    rpc GetIpData (GeoIpDataRequest) returns (GeoIpDataResponse) {}
+}
+
+message GeoIpDataRequest {
+    string IP = 1;
+}
+
+message GeoIpDataResponse {
+    GeoIpCity City = 1;
+    GeoIpContinent Continent = 2;
+    GeoIpCountry Country = 3;
+    GeoIpLocation Location = 4;
+    GeoIpPostal Postal = 5;
+    GeoIpRepresentedCountry RepresentedCountry = 6;
+    repeated GeoIpSubdivision Subdivisions = 7;
+}
+
+message GeoIpCity {
+    uint32 GeoNameID = 1;
+    map<string, string> Names = 2;
+}
+
+message GeoIpContinent {
+    string Code = 1;
+    uint32 GeoNameID = 2;
+    map<string, string> Names = 3;
+}
+
+message GeoIpCountry {
+    uint32 GeoNameID = 1;
+    bool IsInEuropeanUnion = 2;
+    string IsoCode = 3;
+    map<string, string> Names = 4;
+}
+
+message GeoIpLocation {
+    uint32 AccuracyRadius = 1;
+    double Latitude = 2;
+    double Longitude = 3;
+    uint32 MetroCode = 4;
+    string TimeZone = 5;
+}
+
+message GeoIpPostal {
+    string Code = 1;
+}
+
+message GeoIpRepresentedCountry {
+    uint32 GeoNameID = 1;
+    bool IsInEuropeanUnion = 2;
+    string IsoCode = 3;
+    string type = 4;
+    map<string, string> Names = 5;
+}
+
+message GeoIpSubdivision {
+    uint32 GeoNameID = 1;
+    string IsoCode = 2;
+    map<string, string> Names = 3;
+}
