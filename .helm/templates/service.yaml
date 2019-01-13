@@ -1,0 +1,24 @@
+{{- $deployment := .Values.frontend -}}
+{{- $svcName := printf "%s-%s" .Release.Name $deployment.name }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $svcName }}
+  labels:
+    app: {{ .Chart.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    role: {{ $deployment.role }}
+spec:
+  type: {{ $deployment.service.type }}
+  ports:
+  - port: {{ $deployment.service.port }}
+    targetPort: {{ $deployment.port }}
+    protocol: {{ $deployment.service.protocol }}
+  selector:
+    app: {{ .Chart.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    role: {{ $deployment.role }}

@@ -1,0 +1,58 @@
+{{- $deployment := .Values.frontend -}}
+{{- $deploymentName := printf "%s-%s" .Release.Name $deployment.name }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $deploymentName }}
+  labels:
+    app: {{ .Chart.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    role: {{ $deployment.role }}
+  annotations: 
+    released: {{ .Release.Time}}    
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+      chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+      release: {{ .Release.Name }}
+      heritage: {{ .Release.Service }}
+      role: {{ $deployment.role }}
+  replicas: {{ $deployment.replicas }} 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+        role: {{ $deployment.role }}
+    spec:
+      {{/*volumes:
+      - name: {{ $deploymentName }}-config
+        secret:
+          secretName: {{ $deploymentName }}-config
+      */}}
+      containers:
+      - name: {{ $deployment.name }}
+        image: {{ $deployment.image }}:{{ $deployment.imageTag }}
+        ports:
+        - containerPort: {{ $deployment.port }}
+        #livenessProbe:
+        #  httpGet:
+        #    path: /_healthz
+        #    port: {{ $deployment.port }}
+        #  initialDelaySeconds: 5
+        #  timeoutSeconds: 3
+        #  failureThreshold: 2
+        volumeMounts:
+        - name: {{ $deploymentName }}-config
+          mountPath: /application/etc/
+          readOnly: true
