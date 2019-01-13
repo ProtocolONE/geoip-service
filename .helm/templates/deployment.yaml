@@ -52,7 +52,8 @@ spec:
         #  initialDelaySeconds: 5
         #  timeoutSeconds: 3
         #  failureThreshold: 2
-        volumeMounts:
+        {{/*volumeMounts:
         - name: {{ $deploymentName }}-config
           mountPath: /application/etc/
           readOnly: true
+        */}}
