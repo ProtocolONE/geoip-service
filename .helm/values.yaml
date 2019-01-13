@@ -1,15 +1,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-enableCertIssuer: true
-
-ingress:
-  hostname: geoip.tst.protocol.one
-  path: /
-
-certIssuer:
-  email: admin@protocol.one
-
 frontend:
   name: geoip
   role: frontend
