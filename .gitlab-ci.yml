@@ -53,6 +53,7 @@ deploy_production:
       helm upgrade --install $P1_PROJECT .helm
         --set frontend.image=$CI_REGISTRY_IMAGE
         --set frontend.imageTag="$CI_COMMIT_REF_SLUG".$CI_PIPELINE_ID
+        --debug
         --wait
         --timeout 180 ||
       (helm history --max 2 $P1_PROJECT | head -n 2 | tail -n 1 | awk "{print \$1}" | xargs helm rollback $P1_PROJECT && exit 1)'
