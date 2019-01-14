@@ -7,7 +7,7 @@ WORKDIR /application
 
 ENV GO111MODULE=on
 ENV MICRO_REGISTRY_ADDRESS=p1pay-consul
-ENV MAXMIND_GEOIP_DB_PATH="/application/assets/maxmind/GeoLite2-City.mmdb"
+ENV MAXMIND_GEOIP_DB_PATH="/application/assets/GeoLite2-City.mmdb"
 
 COPY go.mod go.sum ./
 RUN go mod download
