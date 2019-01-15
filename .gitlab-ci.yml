@@ -55,6 +55,7 @@ deploy_production:
         --set frontend.imageTag="$CI_COMMIT_REF_SLUG".$CI_PIPELINE_ID
         --debug
         --wait
+        --debug
         --timeout 180 ||
       (helm history --max 2 $P1_PROJECT | head -n 2 | tail -n 1 | awk "{print \$1}" | xargs helm rollback $P1_PROJECT && exit 1)'
   only:
