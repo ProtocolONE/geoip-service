@@ -6,11 +6,11 @@ frontend:
   role: frontend
   image: "p1hub/geoip.api"
   imageTag: latest
-  port: 8080
+  port: 8090
   replicas: 1
   service: 
     type: ClusterIP
-    port: 8080
+    port: 8090
     protocol: TCP
   
 resources: {}
