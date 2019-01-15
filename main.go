@@ -10,18 +10,28 @@ import (
 	"github.com/micro/go-micro"
 	k8s "github.com/micro/kubernetes/go/micro"
 	"github.com/oschwald/geoip2-golang"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
 	"time"
 )
 
 type Config struct {
-	GeoIpDbPath     string `envconfig:"MAXMIND_GEOIP_DB_PATH" required:"true"`
-	KubernetesHost  string `envconfig:"KUBERNETES_SERVICE_HOST" required:"false"`
-	HealthCheckPort int    `envconfig:"HEALTH_CHECK_PORT" required:"false" default:"8080"`
+	GeoIpDbPath    string `envconfig:"MAXMIND_GEOIP_DB_PATH" required:"true"`
+	KubernetesHost string `envconfig:"KUBERNETES_SERVICE_HOST" required:"false"`
+	MetricsPort    int    `envconfig:"METRICS_PORT" required:"false" default:"8080"`
 }
 
 type customHealthCheck struct{}
+
+var (
+	opsCounter = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "geoip_processed_ops_total",
+		Help: "The total number of processed events",
+	})
+)
 
 func main() {
 	cfg := &Config{}
@@ -67,19 +77,26 @@ func main() {
 
 	service.Init()
 
-	err = proto.RegisterGeoIpServiceHandler(service.Server(), &geoip.Service{GeoReader: db})
+	err = proto.RegisterGeoIpServiceHandler(service.Server(), &geoip.Service{GeoReader: db, OpsCounter: opsCounter.Inc})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	go prepareHealthCheck(cfg)
+	initHealth(cfg)
+	initPrometheus()
+
+	go func() {
+		if err = http.ListenAndServe(fmt.Sprintf(":%d", cfg.MetricsPort), nil); err != nil {
+			log.Fatal("Metrics listen failed")
+		}
+	}()
 
 	if err := service.Run(); err != nil {
 		log.Fatal(err)
 	}
 }
 
-func prepareHealthCheck(cfg *Config) {
+func initHealth(cfg *Config) {
 	h := health.New()
 	err := h.AddChecks([]*health.Config{
 		{
@@ -94,17 +111,17 @@ func prepareHealthCheck(cfg *Config) {
 		log.Fatal("Health check register failed")
 	}
 
-	log.Printf("Health check listening on :%d", cfg.HealthCheckPort)
+	log.Printf("Health check listening on :%d", cfg.MetricsPort)
 
 	if err = h.Start(); err != nil {
 		log.Fatal("Health check start failed")
 	}
 
 	http.HandleFunc("/health", handlers.NewJSONHandlerFunc(h, nil))
+}
 
-	if err = http.ListenAndServe(fmt.Sprintf(":%d", cfg.HealthCheckPort), nil); err != nil {
-		log.Fatal("Health check listen failed")
-	}
+func initPrometheus() {
+	http.Handle("/metrics", promhttp.Handler())
 }
 
 func (c *customHealthCheck) Status() (interface{}, error) {
