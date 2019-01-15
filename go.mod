@@ -1,6 +1,8 @@
 module github.com/ProtocolONE/geoip-service
 
 require (
+	github.com/InVisionApp/go-health v2.1.0+incompatible // indirect
+	github.com/InVisionApp/go-logger v1.0.1 // indirect
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
 	github.com/go-log/log v0.1.0 // indirect
 	github.com/golang/protobuf v1.2.1-0.20181128192352-1d3f30b51784
