@@ -19,11 +19,12 @@ require (
 	github.com/micro/cli v0.0.0-20181223203424-1b0c9793c300 // indirect
 	github.com/micro/go-grpc v0.6.0
 	github.com/micro/go-log v0.0.0-20170512141327-cbfa9447f9b6 // indirect
-	github.com/micro/go-micro v0.15.0
-	github.com/micro/go-plugins v0.17.0 // indirect
+	github.com/micro/go-micro v0.20.0
+	github.com/micro/go-plugins v0.20.0 // indirect
 	github.com/micro/go-rcache v0.0.0-20180418165751-a581a57b5133 // indirect
 	github.com/micro/grpc-go v0.0.0-20180913204047-2c703400301b // indirect
 	github.com/micro/h2c v1.0.0 // indirect
+	github.com/micro/kubernetes v0.2.0 // indirect
 	github.com/micro/mdns v0.0.0-20181201230301-9c3770d4057a // indirect
 	github.com/micro/util v0.0.0-20181115195001-2d4f591dc538 // indirect
 	github.com/miekg/dns v1.1.2 // indirect
