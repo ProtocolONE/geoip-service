@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"github.com/ProtocolONE/geoip-service/pkg"
 	"github.com/ProtocolONE/geoip-service/pkg/proto"
-	"github.com/micro/go-grpc"
+	"github.com/micro/go-micro"
 )
 
 func main() {
 	// create a new service
-	service := grpc.NewService()
+	service := micro.NewService()
 
 	// parse command line flags
 	service.Init()
