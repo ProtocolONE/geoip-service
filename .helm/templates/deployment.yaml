@@ -43,10 +43,9 @@ spec:
       containers:
       - name: {{ $deployment.name }}
         image: {{ $deployment.image }}:{{ $deployment.imageTag }}
-        args: ["--server_address=0.0.0.0:{{ $deployment.port}}"]
         env:
         - name: MICRO_SERVER_ADDRESS
-          value: "0.0.0.0:8090"
+          value: "0.0.0.0:{{ $deployment.port }}"
         - name: MICRO_REGISTRY
           value: mdns
         - name: METRICS_PORT
