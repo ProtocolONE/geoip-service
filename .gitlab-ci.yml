@@ -100,6 +100,7 @@ review:
         --set replicas=1
         --set ingress.hostname=$CI_ENVIRONMENT_SLUG.tst.protocol.one
         --wait
+        --debug
         --timeout 180
         --namespace $CI_ENVIRONMENT_SLUG'
   only:
