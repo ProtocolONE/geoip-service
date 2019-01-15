@@ -1,5 +1,5 @@
 {{- $deployment := .Values.frontend -}}
-{{- $svcName := printf "%s-%s" .Release.Name $deployment.name }}
+{{- $svcName := printf "%s" .Release.Name }}
 apiVersion: v1
 kind: Service
 metadata:

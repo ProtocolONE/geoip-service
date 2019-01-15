@@ -1,5 +1,5 @@
 variables:
-  P1_PROJECT: geoip
+  P1_PROJECT: p1geoip
 
 stages:
   - build

@@ -2,15 +2,15 @@
 # Declare variables to be passed into your templates.
 
 frontend:
-  name: geoip
+  name: p1geoip
   role: frontend
   image: "p1hub/geoip.api"
   imageTag: latest
-  port: 80
+  port: 8080
   replicas: 1
   service: 
     type: ClusterIP
-    port: 80
+    port: 8080
     protocol: TCP
   
 resources: {}
