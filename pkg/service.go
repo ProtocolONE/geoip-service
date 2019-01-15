@@ -14,7 +14,8 @@ const (
 )
 
 type Service struct {
-	GeoReader *geoip2.Reader
+	GeoReader  *geoip2.Reader
+	OpsCounter func()
 }
 
 func (c *Service) GetIpData(ctx context.Context, req *proto.GeoIpDataRequest, res *proto.GeoIpDataResponse) error {
@@ -80,5 +81,6 @@ func (c *Service) GetIpData(ctx context.Context, req *proto.GeoIpDataRequest, re
 		}
 	}
 
+	c.OpsCounter()
 	return nil
 }

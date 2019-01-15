@@ -1,7 +1,7 @@
 module github.com/ProtocolONE/geoip-service
 
 require (
-	github.com/InVisionApp/go-health v2.1.0+incompatible // indirect
+	github.com/InVisionApp/go-health v2.1.0+incompatible
 	github.com/InVisionApp/go-logger v1.0.1 // indirect
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
 	github.com/go-log/log v0.1.0 // indirect
@@ -26,7 +26,7 @@ require (
 	github.com/micro/go-rcache v0.0.0-20180418165751-a581a57b5133 // indirect
 	github.com/micro/grpc-go v0.0.0-20180913204047-2c703400301b // indirect
 	github.com/micro/h2c v1.0.0 // indirect
-	github.com/micro/kubernetes v0.2.0 // indirect
+	github.com/micro/kubernetes v0.2.0
 	github.com/micro/mdns v0.0.0-20181201230301-9c3770d4057a // indirect
 	github.com/micro/util v0.0.0-20181115195001-2d4f591dc538 // indirect
 	github.com/miekg/dns v1.1.2 // indirect
@@ -36,6 +36,7 @@ require (
 	github.com/oschwald/geoip2-golang v1.2.1
 	github.com/oschwald/maxminddb-golang v1.3.0 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
+	github.com/prometheus/client_golang v0.9.2
 	github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529 // indirect
 	github.com/spf13/viper v1.3.1 // indirect
 	github.com/stretchr/testify v1.3.0
