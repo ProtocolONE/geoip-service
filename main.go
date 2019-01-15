@@ -85,7 +85,7 @@ func prepareHealthCheck(cfg *Config) {
 		{
 			Name:     "health-check",
 			Checker:  &customHealthCheck{},
-			Interval: time.Duration(5) * time.Second,
+			Interval: time.Duration(1) * time.Second,
 			Fatal:    true,
 		},
 	})
@@ -94,11 +94,15 @@ func prepareHealthCheck(cfg *Config) {
 		log.Fatal("Health check register failed")
 	}
 
-	log.Printf("Server listening on :%d", cfg.HealthCheckPort)
+	log.Printf("Health check listening on :%d", cfg.HealthCheckPort)
+
+	if err = h.Start(); err != nil {
+		log.Fatal("Health check start failed")
+	}
 
 	http.HandleFunc("/health", handlers.NewJSONHandlerFunc(h, nil))
-	err = http.ListenAndServe(fmt.Sprintf(":%d", cfg.HealthCheckPort), nil)
-	if err != nil {
+
+	if err = http.ListenAndServe(fmt.Sprintf(":%d", cfg.HealthCheckPort), nil); err != nil {
 		log.Fatal("Health check listen failed")
 	}
 }
