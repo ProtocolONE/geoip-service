@@ -53,7 +53,7 @@ spec:
         - name: MICRO_SELECTOR
           value: "static"
         ports:
-        - containerPort: "{{ $deployment.port }}"
+        - containerPort: {{$deployment.port}}
         livenessProbe:
           httpGet:
             path: /health
