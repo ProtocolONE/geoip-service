@@ -49,7 +49,7 @@ spec:
         - name: MICRO_REGISTRY
           value: mdns
         - name: METRICS_PORT
-          value: $deployment.healthPort
+          value: {{ $deployment.healthPort }}
         - name: MICRO_SELECTOR
           value: static
         ports:
@@ -57,7 +57,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /health
-            port: $deployment.healthPort
+            port: {{ $deployment.healthPort }}
           initialDelaySeconds: 15
           timeoutSeconds: 1
           failureThreshold: 3
