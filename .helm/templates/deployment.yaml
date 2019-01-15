@@ -43,15 +43,20 @@ spec:
       containers:
       - name: {{ $deployment.name }}
         image: {{ $deployment.image }}:{{ $deployment.imageTag }}
+        args: ["--server_address=0.0.0.0:{{ $deployment.port}}"]
+        env:
+        - name: MICRO_SERVER_ADDRESS
+          value: "0.0.0.0:8090"
         ports:
         - containerPort: {{ $deployment.port }}
-        #livenessProbe:
-        #  httpGet:
-        #    path: /_healthz
-        #    port: {{ $deployment.port }}
-        #  initialDelaySeconds: 5
-        #  timeoutSeconds: 3
-        #  failureThreshold: 2
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          failureThreshold: 3
+          periodSeconds: 5
         {{/*volumeMounts:
         - name: {{ $deploymentName }}-config
           mountPath: /application/etc/
