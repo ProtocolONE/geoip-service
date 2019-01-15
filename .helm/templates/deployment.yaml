@@ -47,12 +47,16 @@ spec:
         env:
         - name: MICRO_SERVER_ADDRESS
           value: "0.0.0.0:8090"
+        - name: METRICS_PORT
+          value: $deployment.healthPort
+        - name: MICRO_SELECTOR
+          value: static
         ports:
         - containerPort: {{ $deployment.port }}
         livenessProbe:
           httpGet:
             path: /health
-            port: 8080
+            port: $deployment.healthPort
           initialDelaySeconds: 15
           timeoutSeconds: 1
           failureThreshold: 3

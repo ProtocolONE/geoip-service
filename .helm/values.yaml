@@ -7,6 +7,7 @@ frontend:
   image: "p1hub/geoip.api"
   imageTag: latest
   port: 8090
+  healthPort: 8081
   replicas: 1
   service: 
     type: ClusterIP
