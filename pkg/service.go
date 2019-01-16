@@ -10,7 +10,7 @@ import (
 
 const (
 	Version     = "latest"
-	ServiceName = "go.p1.geoip-service"
+	ServiceName = "p1geoip"
 )
 
 type Service struct {
