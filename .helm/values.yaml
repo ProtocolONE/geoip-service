@@ -3,7 +3,7 @@
 
 backend:
   name: gobackend
-  role: backend
+  role: gobackend
   image: "p1hub/geoip.api"
   imageTag: latest
   port: 8080
