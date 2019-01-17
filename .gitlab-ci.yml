@@ -51,8 +51,8 @@ deploy_production:
       kubectl config use-context ci &&
       helm init --client-only &&
       helm upgrade --install $P1_PROJECT .helm
-        --set frontend.image=$CI_REGISTRY_IMAGE
-        --set frontend.imageTag="$CI_COMMIT_REF_SLUG".$CI_PIPELINE_ID
+        --set backend.image=$CI_REGISTRY_IMAGE
+        --set backend.imageTag="$CI_COMMIT_REF_SLUG".$CI_PIPELINE_ID
         --debug
         --wait
         --debug
@@ -96,8 +96,8 @@ review:
       kubectl get namespace $CI_ENVIRONMENT_SLUG ||
       kubectl create namespace $CI_ENVIRONMENT_SLUG &&
       helm upgrade --install $CI_ENVIRONMENT_SLUG .helm
-        --set frontend.image=$CI_REGISTRY_IMAGE
-        --set frontend.imageTag="$CI_COMMIT_REF_SLUG".$CI_PIPELINE_ID
+        --set backend.image=$CI_REGISTRY_IMAGE
+        --set backend.imageTag="$CI_COMMIT_REF_SLUG".$CI_PIPELINE_ID
         --set replicas=1
         --set ingress.hostname=$CI_ENVIRONMENT_SLUG.tst.protocol.one
         --wait
