@@ -1,4 +1,4 @@
-{{- $deployment := .Values.frontend -}}
+{{- $deployment := .Values.backend -}}
 {{- $deploymentName := printf "%s-%s" .Release.Name $deployment.name }}
 apiVersion: apps/v1
 kind: Deployment
