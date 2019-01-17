@@ -1,9 +1,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-frontend:
-  name: p1geoip
-  role: frontend
+backend:
+  name: gobackend
+  role: backend
   image: "p1hub/geoip.api"
   imageTag: latest
   port: 8080
