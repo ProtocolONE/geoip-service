@@ -6,12 +6,11 @@ import (
 	"github.com/InVisionApp/go-health/handlers"
 	"github.com/ProtocolONE/geoip-service/pkg"
 	"github.com/ProtocolONE/geoip-service/pkg/proto"
+	prometheus_plugin "github.com/ProtocolONE/go-micro-plugins/wrapper/monitoring/prometheus"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/micro/go-micro"
 	k8s "github.com/micro/kubernetes/go/micro"
 	"github.com/oschwald/geoip2-golang"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
@@ -25,13 +24,6 @@ type Config struct {
 }
 
 type customHealthCheck struct{}
-
-var (
-	opsCounter = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "geoip_processed_ops_total",
-		Help: "The total number of processed events",
-	})
-)
 
 func main() {
 	cfg := &Config{}
@@ -61,10 +53,10 @@ func main() {
 	log.Printf(dbInfo, cfg.GeoIpDbPath, dbMeta.BinaryFormatMajorVersion, dbMeta.BinaryFormatMinorVersion, dbMeta.DatabaseType)
 
 	var service micro.Service
-
 	options := []micro.Option{
 		micro.Name(geoip.ServiceName),
 		micro.Version(geoip.Version),
+		micro.WrapHandler(prometheus_plugin.NewHandlerWrapper((*proto.GeoIpService)(nil))),
 	}
 
 	if cfg.KubernetesHost == "" {
@@ -77,7 +69,8 @@ func main() {
 
 	service.Init()
 
-	err = proto.RegisterGeoIpServiceHandler(service.Server(), &geoip.Service{GeoReader: db, OpsCounter: opsCounter.Inc})
+	err = proto.RegisterGeoIpServiceHandler(service.Server(), &geoip.Service{GeoReader: db})
+
 	if err != nil {
 		log.Fatal(err)
 	}

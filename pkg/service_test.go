@@ -28,7 +28,7 @@ func (suite *ServiceTestSuite) SetupTest() {
 	}
 
 	suite.db = db
-	suite.service = &geoip.Service{GeoReader: db, OpsCounter: func() {}}
+	suite.service = &geoip.Service{GeoReader: db}
 }
 
 func (suite *ServiceTestSuite) TearDownTest() {
