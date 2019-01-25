@@ -56,7 +56,7 @@ func main() {
 	options := []micro.Option{
 		micro.Name(geoip.ServiceName),
 		micro.Version(geoip.Version),
-		micro.WrapHandler(prometheus_plugin.NewHandlerWrapper((*proto.GeoIpService)(nil))),
+		micro.WrapHandler(prometheus_plugin.NewHandlerWrapper()),
 	}
 
 	if cfg.KubernetesHost == "" {
