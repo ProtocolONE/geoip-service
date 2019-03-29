@@ -13,7 +13,8 @@ metadata:
 spec:
   type: {{ $deployment.service.type }}
   ports:
-  - port: {{ $deployment.service.port }}
+  - name: {{ $deployment.name }}
+    port: {{ $deployment.service.port }}
     targetPort: {{ $deployment.port }}
     protocol: {{ $deployment.service.protocol }}
   - name: metrics
