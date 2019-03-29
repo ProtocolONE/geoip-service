@@ -8,6 +8,9 @@ backend:
   imageTag: latest
   port: 8080
   healthPort: 8081
+  healthPath: /health
+  metricsPort: 8081
+  metricsPath: /metrics
   replicas: 1
   service: 
     type: ClusterIP

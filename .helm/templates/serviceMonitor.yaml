@@ -1,0 +1,25 @@
+{{- $deployment := .Values.backend -}}
+{{- $svcName := printf "%s" .Release.Name }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    prometheus: kube-prometheus
+    release: prometheus
+  name: {{ $svcName }}
+  namespace: monitoring
+spec:
+  endpoints:
+  - interval: 10s
+    port: metrics
+    path: {{ $deployment.metricsPath }}
+    scrapeTimeout: 10s
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+      role: {{ $deployment.role }}
+      chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+      release: {{ .Release.Name }}
+      heritage: {{ .Release.Service }}

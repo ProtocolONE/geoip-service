@@ -16,6 +16,10 @@ spec:
   - port: {{ $deployment.service.port }}
     targetPort: {{ $deployment.port }}
     protocol: {{ $deployment.service.protocol }}
+  - name: metrics
+    port: {{ $deployment.metricsPort }}
+    targetPort: {{ $deployment.metricsPort }}
+    protocol: TCP
   selector:
     app: {{ .Chart.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
