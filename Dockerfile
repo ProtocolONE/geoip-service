@@ -1,4 +1,4 @@
-FROM golang:1.11.2-alpine AS builder
+FROM golang:1.12.6-alpine3.9 AS builder
 MAINTAINER Nikolay Bondarenko <nikolay.bondarenko@protocol.one>
 
 RUN apk add bash ca-certificates git
@@ -6,12 +6,21 @@ RUN apk add bash ca-certificates git
 WORKDIR /application
 
 ENV GO111MODULE=on
-ENV MAXMIND_GEOIP_DB_PATH="/application/assets/GeoLite2-City.mmdb"
 
 COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . ./
-RUN CGO_ENABLED=0 GOOS=linux go build -a -o $GOPATH/bin/geoip-service .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o ./bin/geoip-service .
 
-ENTRYPOINT $GOPATH/bin/geoip-service
+FROM alpine:3.9
+
+USER 2010:2010
+
+WORKDIR /application
+
+COPY --from=builder /application /application
+
+ENV MAXMIND_GEOIP_DB_PATH="/application/assets/GeoLite2-City.mmdb"
+
+ENTRYPOINT /application/bin/geoip-service
