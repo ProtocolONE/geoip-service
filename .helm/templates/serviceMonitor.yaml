@@ -1,5 +1,6 @@
 {{- $deployment := .Values.backend -}}
 {{- $svcName := printf "%s" .Release.Name }}
+{{- $namespace := printf "ps-%s" .Release.Name }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -7,7 +8,7 @@ metadata:
     prometheus: kube-prometheus
     release: prometheus
   name: {{ $svcName }}
-  #namespace: monitoring
+  namespace: {{ $namespace }}
 spec:
   endpoints:
   - interval: 10s

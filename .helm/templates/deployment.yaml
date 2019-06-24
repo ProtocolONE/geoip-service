@@ -1,9 +1,11 @@
 {{- $deployment := .Values.backend -}}
 {{- $deploymentName := printf "%s-%s" .Release.Name $deployment.name }}
+{{- $namespace := printf "ps-%s" .Release.Name }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ $deploymentName }}
+  namespace: {{ $namespace }}
   labels:
     app: {{ .Chart.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"

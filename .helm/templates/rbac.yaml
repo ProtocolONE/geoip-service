@@ -1,30 +1,53 @@
+{{- $deployment := .Values.backend -}}
+{{- $deploymentName := printf "%s-%s" .Release.Name $deployment.name }}
+{{- $namespace := printf "ps-%s" .Release.Name }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  namespace: {{ $namespace }}
   name: {{ .Release.Name }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ .Release.Name }}
+  namespace: {{ $namespace }}
 rules:
-- apiGroups:
-  - ""
-  resources:
+- apiGroups: [""]
+  resources: 
   - pods
-  verbs:
-  - list
+  verbs: 
   - patch
-  - watch
+- apiGroups: [""]
+  resources: 
+  - secrets
+  resourceNames: 
+  - {{ $deploymentName }}-env
+  verbs: 
+  - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ .Release.Name }}
+  namespace: {{ $namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: {{ .Release.Name }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ $namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: paysuper-list-pods
 subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}
