@@ -8,7 +8,7 @@ metadata:
     prometheus: kube-prometheus
     release: prometheus
   name: {{ $svcName }}
-  namespace: {{ $namespace }}
+  #namespace: {{ $namespace }}
 spec:
   endpoints:
   - interval: 10s
