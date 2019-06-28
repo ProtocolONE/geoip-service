@@ -9,7 +9,6 @@ import (
 	prometheus_plugin "github.com/ProtocolONE/go-micro-plugins/wrapper/monitoring/prometheus"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/micro/go-micro"
-	k8s "github.com/micro/kubernetes/go/micro"
 	"github.com/oschwald/geoip2-golang"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
@@ -18,9 +17,8 @@ import (
 )
 
 type Config struct {
-	GeoIpDbPath    string `envconfig:"MAXMIND_GEOIP_DB_PATH" required:"true"`
-	KubernetesHost string `envconfig:"KUBERNETES_SERVICE_HOST" required:"false"`
-	MetricsPort    int    `envconfig:"METRICS_PORT" required:"false" default:"8080"`
+	GeoIpDbPath string `envconfig:"MAXMIND_GEOIP_DB_PATH" required:"true"`
+	MetricsPort int    `envconfig:"METRICS_PORT" required:"false" default:"8080"`
 }
 
 type customHealthCheck struct{}
@@ -52,21 +50,13 @@ func main() {
 
 	log.Printf(dbInfo, cfg.GeoIpDbPath, dbMeta.BinaryFormatMajorVersion, dbMeta.BinaryFormatMinorVersion, dbMeta.DatabaseType)
 
-	var service micro.Service
-	options := []micro.Option{
+	log.Println("Initialize micro service")
+
+	service := micro.NewService(
 		micro.Name(geoip.ServiceName),
 		micro.Version(geoip.Version),
 		micro.WrapHandler(prometheus_plugin.NewHandlerWrapper()),
-	}
-
-	if cfg.KubernetesHost == "" {
-		service = micro.NewService(options...)
-		log.Println("Initialize micro service")
-	} else {
-		service = k8s.NewService(options...)
-		log.Println("Initialize k8s service")
-	}
-
+	)
 	service.Init()
 
 	err = proto.RegisterGeoIpServiceHandler(service.Server(), &geoip.Service{GeoReader: db})
