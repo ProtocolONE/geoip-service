@@ -15,6 +15,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -o ./bin/geoip-service .
 
 FROM alpine:3.9
 
+RUN apk update && apk add ca-certificates tzdata && rm -rf /var/cache/apk/*
+
 USER 2010:2010
 
 WORKDIR /application

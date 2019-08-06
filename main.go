@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"io/ioutil"
 
 	"github.com/InVisionApp/go-health"
 	"github.com/InVisionApp/go-health/handlers"
@@ -15,6 +16,7 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/oschwald/geoip2-golang"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	pathio "gopkg.in/Clever/pathio.v3"
 )
 
 type Config struct {
@@ -31,10 +33,20 @@ func main() {
 		log.Fatalf("Config init failed with error: %s\n", err)
 	}
 
-	db, err := geoip2.Open(cfg.GeoIpDbPath)
+	pathioReader, err := pathio.Reader(cfg.GeoIpDbPath)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	geoipBuf, err := ioutil.ReadAll(pathioReader)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	db, err := geoip2.FromBytes(geoipBuf)	
+	if err != nil {
+		log.Fatal(err)
+	}	
 
 	defer func() {
 		err := db.Close()

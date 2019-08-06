@@ -4,6 +4,8 @@ require (
 	github.com/InVisionApp/go-health v2.1.0+incompatible
 	github.com/InVisionApp/go-logger v1.0.1 // indirect
 	github.com/ProtocolONE/go-micro-plugins v0.3.0
+	github.com/aws/aws-sdk-go v1.22.0 // indirect
+	github.com/golang/mock v1.3.1 // indirect
 	github.com/golang/protobuf v1.2.1-0.20181128192352-1d3f30b51784
 	github.com/json-iterator/go v1.1.5 // indirect
 	github.com/kelseyhightower/envconfig v1.3.0
@@ -20,7 +22,6 @@ require (
 	github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910
 	github.com/spf13/viper v1.3.1 // indirect
 	github.com/stretchr/testify v1.3.0
-	golang.org/x/crypto v0.0.0-20190103213133-ff983b9c42bc // indirect
-	golang.org/x/sys v0.0.0-20190109145017-48ac38b7c8cb // indirect
 	google.golang.org/grpc v1.17.0 // indirect
+	gopkg.in/Clever/pathio.v3 v3.7.1
 )

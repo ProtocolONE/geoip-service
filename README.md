@@ -28,7 +28,9 @@ If you need it uou can rebuild proto file with protoc
 protoc --proto_path=. --micro_out=. --go_out=. geoip.proto
 ```
  
-Setup environment variable `MAXMIND_GEOIP_DB_PATH` with path to the maxmind database path.
+Setup environment variable `MAXMIND_GEOIP_DB_PATH` with path to the maxmind database path. 
+The path can be local file path like `/application/assets/GeoLite2-City.mmdb`,
+or it can be AWS S3 object path like `s3://bucketName/GeoLite2-City.mmdb`. In the latter case it is required to provide S3 access credentials with the environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
 By default service will be executed with declared by `MICRO_REGISTRY` registry and GRPC as a transport.
 
