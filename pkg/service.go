@@ -3,9 +3,10 @@ package geoip
 import (
 	"context"
 	"fmt"
+	"net"
+	"log"
 	"github.com/ProtocolONE/geoip-service/pkg/proto"
 	"github.com/oschwald/geoip2-golang"
-	"net"
 )
 
 const (
@@ -25,6 +26,7 @@ func (c *Service) GetIpData(ctx context.Context, req *proto.GeoIpDataRequest, re
 
 	data, err := c.GeoReader.City(ip)
 	if err != nil {
+		log.Printf("City not found, IP: %s", req.IP)
 		return err
 	}
 

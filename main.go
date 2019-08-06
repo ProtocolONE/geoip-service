@@ -2,18 +2,19 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	"github.com/InVisionApp/go-health"
 	"github.com/InVisionApp/go-health/handlers"
-	"github.com/ProtocolONE/geoip-service/pkg"
+	geoip "github.com/ProtocolONE/geoip-service/pkg"
 	"github.com/ProtocolONE/geoip-service/pkg/proto"
 	prometheus_plugin "github.com/ProtocolONE/go-micro-plugins/wrapper/monitoring/prometheus"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/micro/go-micro"
 	"github.com/oschwald/geoip2-golang"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"log"
-	"net/http"
-	"time"
 )
 
 type Config struct {
@@ -43,12 +44,14 @@ func main() {
 	}()
 
 	dbMeta := db.Metadata()
+	dbBuildDate := time.Unix(int64(dbMeta.BuildEpoch), 0).UTC()
 	dbInfo := "Loaded database info:\n" +
 		"\tFilename: %s\n" +
 		"\tVersion: %d.%d\n" +
-		"\tType: %s\n"
+		"\tType: %s\n" +
+		"\tBuild date: %s\n"
 
-	log.Printf(dbInfo, cfg.GeoIpDbPath, dbMeta.BinaryFormatMajorVersion, dbMeta.BinaryFormatMinorVersion, dbMeta.DatabaseType)
+	log.Printf(dbInfo, cfg.GeoIpDbPath, dbMeta.BinaryFormatMajorVersion, dbMeta.BinaryFormatMinorVersion, dbMeta.DatabaseType, dbBuildDate)
 
 	log.Println("Initialize micro service")
 
