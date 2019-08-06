@@ -26,7 +26,7 @@ func (c *Service) GetIpData(ctx context.Context, req *proto.GeoIpDataRequest, re
 
 	data, err := c.GeoReader.City(ip)
 	if err != nil {
-		log.Printf("City not found, IP: %s", req.IP)
+		log.Printf("Geo data not found, IP: %s", req.IP)
 		return err
 	}
 
