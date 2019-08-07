@@ -8,7 +8,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"net"
+	"io/ioutil"
 	"testing"
+	pathio "gopkg.in/Clever/pathio.v3"
 )
 
 type ServiceTestSuite struct {
@@ -22,7 +24,17 @@ func Test_GameService(t *testing.T) {
 }
 
 func (suite *ServiceTestSuite) SetupTest() {
-	db, err := geoip2.Open("../assets/GeoLite2-City.mmdb")
+	pathioReader, err := pathio.Reader("../assets/GeoLite2-City.mmdb")
+	if err != nil {
+		suite.Fail("Unable to open database file")
+	}
+
+	geoipBuf, err := ioutil.ReadAll(pathioReader)
+	if err != nil {
+		suite.Fail("Unable to read database")
+	}
+
+	db, err := geoip2.FromBytes(geoipBuf)	
 	if err != nil {
 		suite.Fail("Unable to open database")
 	}
