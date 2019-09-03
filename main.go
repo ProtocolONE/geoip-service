@@ -2,26 +2,28 @@ package main
 
 import (
 	"fmt"
+	"github.com/InVisionApp/go-health"
+	"github.com/micro/go-micro"
+	"github.com/oschwald/geoip2-golang"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
-	"io/ioutil"
 
-	"github.com/InVisionApp/go-health"
 	"github.com/InVisionApp/go-health/handlers"
 	geoip "github.com/ProtocolONE/geoip-service/pkg"
 	"github.com/ProtocolONE/geoip-service/pkg/proto"
 	prometheus_plugin "github.com/ProtocolONE/go-micro-plugins/wrapper/monitoring/prometheus"
 	"github.com/kelseyhightower/envconfig"
-	"github.com/micro/go-micro"
-	"github.com/oschwald/geoip2-golang"
+	"github.com/micro/go-plugins/client/selector/static"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	pathio "gopkg.in/Clever/pathio.v3"
+	"gopkg.in/Clever/pathio.v3"
 )
 
 type Config struct {
-	GeoIpDbPath string `envconfig:"MAXMIND_GEOIP_DB_PATH" required:"true"`
-	MetricsPort int    `envconfig:"METRICS_PORT" required:"false" default:"8080"`
+	GeoIpDbPath   string `envconfig:"MAXMIND_GEOIP_DB_PATH" required:"true"`
+	MetricsPort   int    `envconfig:"METRICS_PORT" required:"false" default:"8080"`
+	MicroSelector string `envconfig:"MICRO_SELECTOR" required:"false" default:"static"`
 }
 
 type customHealthCheck struct{}
@@ -43,10 +45,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	db, err := geoip2.FromBytes(geoipBuf)	
+	db, err := geoip2.FromBytes(geoipBuf)
 	if err != nil {
 		log.Fatal(err)
-	}	
+	}
 
 	defer func() {
 		err := db.Close()
@@ -67,11 +69,18 @@ func main() {
 
 	log.Println("Initialize micro service")
 
-	service := micro.NewService(
+	options := []micro.Option{
 		micro.Name(geoip.ServiceName),
 		micro.Version(geoip.Version),
 		micro.WrapHandler(prometheus_plugin.NewHandlerWrapper()),
-	)
+	}
+
+	if cfg.MicroSelector == "static" {
+		log.Println(`Use micro selector "static"`)
+		options = append(options, micro.Selector(static.NewSelector()))
+	}
+
+	service := micro.NewService(options...)
 	service.Init()
 
 	err = proto.RegisterGeoIpServiceHandler(service.Server(), &geoip.Service{GeoReader: db})
