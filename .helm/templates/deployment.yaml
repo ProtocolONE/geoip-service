@@ -55,6 +55,13 @@ spec:
           value: "{{ $deployment.healthPort }}"
         - name: MICRO_SELECTOR
           value: "static"
+        {{- range .Values.backend.env }}
+        - name: {{ . }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ $deploymentName }}-env
+              key: {{ . }}
+        {{- end }}          
         ports:
         - containerPort: {{$deployment.port}}
         livenessProbe:
