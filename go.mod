@@ -16,6 +16,4 @@ require (
 	gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0 // indirect
 )
 
-replace github.com/hashicorp/consul => github.com/hashicorp/consul v1.5.1
-
 go 1.13
