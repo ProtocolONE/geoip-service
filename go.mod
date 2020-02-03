@@ -13,6 +13,7 @@ require (
 	github.com/prometheus/client_golang v1.1.0
 	github.com/stretchr/testify v1.4.0
 	gopkg.in/Clever/pathio.v3 v3.7.1
+	gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0 // indirect
 )
 
 replace github.com/hashicorp/consul => github.com/hashicorp/consul v1.5.1
