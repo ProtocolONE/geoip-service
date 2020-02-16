@@ -4,10 +4,13 @@ import (
 	"fmt"
 	"github.com/InVisionApp/go-health"
 	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/registry"
+	"github.com/micro/go-micro/registry/etcd"
 	"github.com/oschwald/geoip2-golang"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/InVisionApp/go-health/handlers"
@@ -21,9 +24,11 @@ import (
 )
 
 type Config struct {
-	GeoIpDbPath   string `envconfig:"MAXMIND_GEOIP_DB_PATH" required:"true"`
-	MetricsPort   int    `envconfig:"METRICS_PORT" required:"false" default:"8080"`
-	MicroSelector string `envconfig:"MICRO_SELECTOR" required:"false" default:"static"`
+	GeoIpDbPath            string `envconfig:"MAXMIND_GEOIP_DB_PATH" required:"true"`
+	MetricsPort            int    `envconfig:"METRICS_PORT" required:"false" default:"8080"`
+	MicroSelector          string `envconfig:"MICRO_SELECTOR" required:"false" default:"static"`
+	MicroRegistry          string `envconfig:"MICRO_REGISTRY" required:"false"`
+	MicroRegistryAddresses string `envconfig:"MICRO_REGISTRY_ADDRESSES" required:"false"`
 }
 
 type customHealthCheck struct{}
@@ -78,6 +83,14 @@ func main() {
 	if cfg.MicroSelector == "static" {
 		log.Println(`Use micro selector "static"`)
 		options = append(options, micro.Selector(static.NewSelector()))
+	}
+
+	if cfg.MicroRegistry == "etcd" {
+		addresses := strings.Split(cfg.MicroRegistryAddresses, ",")
+		registryOpts := []registry.Option{
+			registry.Addrs(addresses...),
+		}
+		options = append(options, micro.Registry(etcd.NewRegistry(registryOpts...)))
 	}
 
 	service := micro.NewService(options...)
