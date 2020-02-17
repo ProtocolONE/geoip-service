@@ -4,13 +4,11 @@ import (
 	"fmt"
 	"github.com/InVisionApp/go-health"
 	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/registry/etcd"
 	"github.com/oschwald/geoip2-golang"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 	"time"
 
 	"github.com/InVisionApp/go-health/handlers"
@@ -28,7 +26,6 @@ type Config struct {
 	MetricsPort            int    `envconfig:"METRICS_PORT" required:"false" default:"8080"`
 	MicroSelector          string `envconfig:"MICRO_SELECTOR" required:"false" default:"static"`
 	MicroRegistry          string `envconfig:"MICRO_REGISTRY" required:"false"`
-	MicroRegistryAddresses string `envconfig:"MICRO_REGISTRY_ADDRESSES" required:"false"`
 }
 
 type customHealthCheck struct{}
@@ -86,11 +83,7 @@ func main() {
 	}
 
 	if cfg.MicroRegistry == "etcd" {
-		addresses := strings.Split(cfg.MicroRegistryAddresses, ",")
-		registryOpts := []registry.Option{
-			registry.Addrs(addresses...),
-		}
-		options = append(options, micro.Registry(etcd.NewRegistry(registryOpts...)))
+		options = append(options, micro.Registry(etcd.NewRegistry()))
 	}
 
 	service := micro.NewService(options...)
