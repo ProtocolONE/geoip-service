@@ -23,7 +23,7 @@ import (
 type Config struct {
 	GeoIpDbPath   string `envconfig:"MAXMIND_GEOIP_DB_PATH" required:"true"`
 	MetricsPort   int    `envconfig:"METRICS_PORT" required:"false" default:"8080"`
-	MicroSelector string `envconfig:"MICRO_SELECTOR" required:"false" default:"static"`
+	MicroSelector string `envconfig:"MICRO_SELECTOR" required:"false"`
 }
 
 type customHealthCheck struct{}
