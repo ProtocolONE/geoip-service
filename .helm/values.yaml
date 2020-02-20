@@ -17,9 +17,12 @@ backend:
     port: 8080
     protocol: TCP
   env:
-  -  MAXMIND_GEOIP_DB_PATH
-  -  AWS_ACCESS_KEY_ID
-  -  AWS_SECRET_ACCESS_KEY  
+    - MICRO_REGISTRY
+    - MICRO_REGISTRY_ADDRESS
+    - MICRO_TRANSPORT
+    - MAXMIND_GEOIP_DB_PATH
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY  
 
 
 resources: {}
