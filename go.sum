@@ -229,6 +229,7 @@ github.com/micro/go-log v0.0.0-20170512141327-cbfa9447f9b6/go.mod h1:QikSuviYcIE
 github.com/micro/go-micro v1.16.0/go.mod h1:A0F58bHLh2m0LAI9QyhvmbN8c1cxhAZo3cM6s+iDsrM=
 github.com/micro/go-micro v1.18.0/go.mod h1:klwUJL1gkdY1MHFyz+fFJXn52dKcty4hoe95Mp571AA=
 github.com/micro/go-plugins/client/selector/static v0.0.0-20200119172437-4fe21aa238fd/go.mod h1:4eBG31c1vKwTNUNslIuZ+XWxTkYLiCWCO3zjEQXXA7M=
+github.com/micro/go-plugins/registry/etcd v0.0.0-20200119172437-4fe21aa238fd/go.mod h1:Loouc88lHZedX09oWjcsc8caI87BKj/PuunUUW4uqvQ=
 github.com/micro/go-plugins/wrapper/monitoring/prometheus v0.0.0-20200119172437-4fe21aa238fd/go.mod h1:5+7nAcwYBnWwfRXNZej3wm30tMfTUOnHB2yeznmIp/c=
 github.com/micro/go-rcache v0.0.0-20180418165751-a581a57b5133/go.mod h1:CBzgfnsCYHcyLg1qeTShF0iDErQmcLmSt+SdwjLkckI=
 github.com/micro/h2c v1.0.0/go.mod h1:54sOOQW/GRlHhH43vKwOhUb+kHaXhVxR0d3CJhn9alE=
