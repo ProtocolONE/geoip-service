@@ -52,4 +52,4 @@ subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}
   #namespace: {{ $namespace }}
-  namespace: default
+  #namespace: default
