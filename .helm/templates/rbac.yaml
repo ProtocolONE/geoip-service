@@ -1,17 +1,16 @@
 {{- $deployment := .Values.backend -}}
 {{- $deploymentName := printf "%s-%s" .Release.Name $deployment.name }}
-{{- $namespace := printf "ps-%s" .Release.Name }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: {{ $namespace }}
+  namespace: {{ .Release.Namespace }}
   name: {{ .Release.Name }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ .Release.Name }}
-  namespace: {{ $namespace }}
+  namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups: [""]
   resources: 
@@ -30,7 +29,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ .Release.Name }}
-  #namespace: {{ $namespace }}
+  namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -43,7 +42,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{ .Release.Name }}-list-pods
-  #namespace: {{ $namespace }}
+  namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -51,5 +50,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}
-  #namespace: {{ $namespace }}
-  #namespace: default
+  namespace: {{ .Release.Namespace }}
