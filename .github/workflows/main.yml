@@ -42,30 +42,9 @@ jobs:
   deploy-tst:
     needs: tests
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     steps:
       - name: Deploy to tst
         run: |
           docker run -e JENKINS_AUTH_TOKEN=$JENKINS_AUTH_TOKEN -e JENKINS_BUILD_TOKEN=$JENKINS_BUILD_TOKEN \
             -e JENKINS_BUILD_PROJECT=$GITHUB_REPOSITORY -e JENKINS_BUILD_BRANCH=${GITHUB_REF##*/} p1hub/p1jenkinstrigger
-
-  deploy-stg-releasebranch:
-    needs: tests
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/release') && github.event_name == 'push'
-    steps:
-      - name: Deploy release branch to stg
-        run: |
-          docker run -e JENKINS_AUTH_TOKEN=$JENKINS_AUTH_TOKEN -e JENKINS_BUILD_TOKEN=$JENKINS_BUILD_TOKEN \
-            -e JENKINS_BUILD_PROJECT=$GITHUB_REPOSITORY -e JENKINS_BUILD_BRANCH=${GITHUB_REF##*/} -e IS_RB="true" p1hub/p1jenkinstrigger
-
-  deploy-stg-tag:
-    needs: tests
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push'
-    steps:
-      - name: Deploy release tag to stg
-        run: |
-          docker run -e JENKINS_AUTH_TOKEN=$JENKINS_AUTH_TOKEN -e JENKINS_BUILD_TOKEN=$JENKINS_BUILD_TOKEN \
-            -e JENKINS_BUILD_PROJECT=$GITHUB_REPOSITORY -e JENKINS_BUILD_BRANCH=${GITHUB_REF##*/} p1hub/p1jenkinstrigger
-
