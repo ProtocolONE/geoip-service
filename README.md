@@ -2,7 +2,7 @@ geoip-service
 =============
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.org/ProtocolONE/geoip-service.svg?branch=master)](https://travis-ci.org/ProtocolONE/geoip-service) [![codecov](https://codecov.io/gh/ProtocolONE/geoip-service/branch/master/graph/badge.svg)](https://codecov.io/gh/ProtocolONE/geoip-service)
+[![Build Status](https://github.com/ProtocolONE/geoip-service/workflows/Build/badge.svg?branch=develop)](https://github.com/ProtocolONE/geoip-service/actions) 
 [![Go Report Card](https://goreportcard.com/badge/github.com/ProtocolONE/geoip-service)](https://goreportcard.com/report/github.com/ProtocolONE/geoip-service)
 
 A fast [Go-Micro](https://github.com/micro/go-micro) based microservice for looking up MaxMind GeoIP2 and GeoLite2 database.
