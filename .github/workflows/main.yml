@@ -55,7 +55,7 @@ jobs:
     if: always()
     steps:
       - name: Slack Workflow Notification
-        uses: paysuper/slack-workflow-status@bf843cb0d4232727f23be661dd571cce0024957e
+        uses: paysuper/slack-workflow-status@118b3b43993d447a1a5cd7fddf5a1235ab219b18
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
