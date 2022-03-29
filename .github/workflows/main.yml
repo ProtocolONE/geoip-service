@@ -1,7 +1,7 @@
 name: Build
 on:
   push:
-    branches:
+  pull_request:
   workflow_dispatch:
 
 env:
@@ -48,3 +48,15 @@ jobs:
         run: |
           docker run -e JENKINS_AUTH_TOKEN=$JENKINS_AUTH_TOKEN -e JENKINS_BUILD_TOKEN=$JENKINS_BUILD_TOKEN \
             -e JENKINS_BUILD_PROJECT=$GITHUB_REPOSITORY -e JENKINS_BUILD_BRANCH=${GITHUB_REF##*/} p1hub/p1jenkinstrigger
+
+  slack-notification:
+    needs: [tests, deploy-tst]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Slack Workflow Notification
+        uses: paysuper/slack-workflow-status@118b3b43993d447a1a5cd7fddf5a1235ab219b18
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          slack_webhook_url: ${{secrets.SLACK_WEBHOOK_URL}}
+

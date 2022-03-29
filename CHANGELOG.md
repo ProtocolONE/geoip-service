@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2022-03-25
+
+### Changes
+- Go-micro version updated
+
+***
+
 ## [1.1.0] - 2020-06-23
 
 ### Added
