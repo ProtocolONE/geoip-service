@@ -24,6 +24,7 @@ replace (
 	github.com/micro/go-rcache => github.com/paysuper/go-micro-rcache v0.0.0-20220702070444-665c82f4b9d5
 	github.com/micro/h2c => github.com/paysuper/go-micro-h2c v0.0.0-20220702065649-c8b8547b076e
 	github.com/micro/util => github.com/paysuper/go-micro-util v0.0.0-20220702070652-63b31644d7b0
+	google.golang.org/grpc => google.golang.org/grpc v1.26.0
 )
 
 go 1.13
