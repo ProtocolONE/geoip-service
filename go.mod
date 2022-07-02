@@ -7,9 +7,7 @@ require (
 	github.com/golang/protobuf v1.3.2
 	github.com/kelseyhightower/envconfig v1.3.0
 	github.com/micro/go-micro v1.18.0
-	github.com/micro/go-plugins/client/selector/static v0.0.0-20200119172437-4fe21aa238fd
-	github.com/micro/go-plugins/registry/etcd v0.0.0-20200119172437-4fe21aa238fd
-	github.com/micro/go-plugins/wrapper/monitoring/prometheus v0.0.0-20200119172437-4fe21aa238fd
+	github.com/micro/go-plugins v0.0.0-20200119172437-4fe21aa238fd
 	github.com/oschwald/geoip2-golang v1.2.1
 	github.com/oschwald/maxminddb-golang v1.4.0 // indirect
 	github.com/prometheus/client_golang v1.3.0
@@ -18,6 +16,14 @@ require (
 	gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0 // indirect
 )
 
-replace github.com/micro/go-micro => github.com/paysuper/go-micro v0.0.0-20220210193104-32a80cb1af1c
+replace (
+	github.com/micro/go-micro => github.com/paysuper/go-micro v0.0.0-20220210193104-32a80cb1af1c
+	github.com/micro/go-plugins => github.com/paysuper/go-micro-plugins v0.0.0-20220702083743-93bc924f2d9f
+	github.com/micro/h2c => github.com/paysuper/go-micro-h2c v0.0.0-20220702065649-c8b8547b076e
+	github.com/micro/go-rcache => github.com/paysuper/go-micro-rcache v0.0.0-20220702070444-665c82f4b9d5
+	github.com/micro/util => github.com/paysuper/go-micro-util v0.0.0-20220702070652-63b31644d7b0
+	github.com/micro/go-log => github.com/paysuper/go-micro-log v0.0.0-20220702070844-04763368acc8
+	github.com/asim/go-bson => github.com/paysuper/go-micro-bson v0.0.0-20220702072159-89518495d2a4
+)
 
 go 1.13
